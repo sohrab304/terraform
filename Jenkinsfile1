@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    environment {
+      THE_TEST=credemtials('aws-secret-sohrabaws')
+    }
+tools {
+  terraform 'terraform'
+}
+    stages {
+        stage('Terraform Code Fetch') {
+            steps {
+                git branch: 'main', url: 'https://github.com/sohrab304/terraform.git'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('Terraform approval') {
+                input {
+                message "want to Deploy?"
+                ok "Yes"
+                parameters {
+                    string(name: 'DEPLOYER', defaultValue: 'Sohrab Khan', description: 'Deploy ??')
+                }
+            }
+            steps {
+                echo "Hello, ${DEPLOYER} Deploying has Started."
+            }
+        }   
+        stage('Terraform apply') {
+                steps {
+                    sh 'terraform apply --auto-approve'
+            }   }
+        }
+    }
