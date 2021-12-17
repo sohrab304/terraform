@@ -6,7 +6,7 @@ tools {
     stages {
         stage('Terraform Code Fetch') {
             steps {
-                git branch: 'main', credentialsId: 'ab1d88a1-db21-45ee-a934-f9774620e741', url: 'https://github.com/sohrab304/terraform'
+                git branch: 'main', url: 'https://github.com/sohrab304/terraform.git'
             }
         }
         stage('Terraform Init') {
