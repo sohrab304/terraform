@@ -17,9 +17,9 @@ tools {
         stage('Terraform Plan') {
             steps {
             withCredentials([<object of type com.cloudbees.jenkins.plugins.awscredentials.AmazonWebServicesCredentialsBinding>]) {
-    // some block
-}
                 sh 'terraform plan'
+                    }
+                
             }
         }
         stage('Terraform approval') {
