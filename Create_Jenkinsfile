@@ -1,0 +1,39 @@
+pipeline {
+    agent any
+tools {
+  terraform 'terraform'
+}
+    stages {
+        stage('Terraform Code Fetch') {
+            steps {
+                git branch: 'main', credentialsId: 'ab1d88a1-db21-45ee-a934-f9774620e741', url: 'https://github.com/sohrab304/Jenkins'
+            }
+        }
+        stage('Terraform Init') {
+            steps {
+                sh 'terraform init'
+            }
+        }
+        stage('Terraform Plan') {
+            steps {
+                sh 'terraform plan'
+            }
+        }
+        stage('Terraform approval') {
+                input {
+                message "want to Deploy?"
+                ok "Yes"
+                parameters {
+                    string(name: 'DEPLOYER', defaultValue: 'Sohrab Khan', description: 'Deploy ??')
+                }
+            }
+            steps {
+                echo "Hello, ${DEPLOYER} Deploying has Started."
+            }
+        }   
+        stage('Terraform apply') {
+                steps {
+                    sh 'terraform apply --auto-approve'
+            }   }
+        }
+    }
