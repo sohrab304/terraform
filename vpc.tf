@@ -4,5 +4,6 @@ resource "aws_vpc" "main" {
 
   tags = {
     Name = "New VPC"
+    Server = "Linux"
   }
 }
