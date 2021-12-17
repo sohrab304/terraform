@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-      THE_TEST=credemtials('aws-secret-sohrabaws')
+      THE_TEST=credentials('aws-secret-sohrabaws')
     }
 tools {
   terraform 'terraform'
